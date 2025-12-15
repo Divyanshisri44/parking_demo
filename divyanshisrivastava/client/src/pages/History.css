@@ -1,0 +1,127 @@
+.history {
+  min-height: calc(100vh - 80px);
+  padding: 40px 20px;
+}
+
+.history-title {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: white;
+  text-align: center;
+}
+
+.history-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  color: white;
+  font-size: 20px;
+}
+
+.no-history {
+  background: white;
+  border-radius: 16px;
+  padding: 60px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.no-history p {
+  color: #666;
+  font-size: 18px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.history-card {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.history-header h3 {
+  color: #333;
+  font-size: 24px;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background: #3498db;
+  color: white;
+}
+
+.status-completed {
+  background: #2ecc71;
+  color: white;
+}
+
+.status-cancelled {
+  background: #e74c3c;
+  color: white;
+}
+
+.history-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
+}
+
+.detail-value.amount {
+  color: #667eea;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #f39c12;
+}
+
+.status-completed {
+  color: #2ecc71;
+}
+
+.status-failed {
+  color: #e74c3c;
+}
+
