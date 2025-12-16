@@ -28,10 +28,15 @@ const Register = () => {
     try {
       const res = await axios.post(
         "https://parking-demo-backend.onrender.com/api/auth/register",
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
 
-      // token save (agar backend bhej raha ho)
+      // ✅ token save (agar backend bhej raha ho)
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
@@ -39,6 +44,7 @@ const Register = () => {
       alert("Account created successfully");
       navigate("/dashboard");
     } catch (err) {
+      console.error(err);
       alert(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
