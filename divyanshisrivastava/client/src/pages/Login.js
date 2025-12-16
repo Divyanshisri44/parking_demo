@@ -1,31 +1,43 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import './Auth.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import "./Auth.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
+
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const result = await login(formData.email, formData.password);
-    setLoading(false);
-    if (result.success) {
-      navigate('/dashboard');
+
+    try {
+      const res = await axios.post(
+        "https://parking-demo-backend.onrender.com/api/auth/login",
+        formData
+      );
+
+      // token save (optional but recommended)
+      localStorage.setItem("token", res.data.token);
+
+      alert("Login successful");
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,6 +45,7 @@ const Login = () => {
     <div className="auth-container">
       <div className="auth-card">
         <h2>Login</h2>
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email</label>
@@ -45,6 +58,7 @@ const Login = () => {
               placeholder="Enter your email"
             />
           </div>
+
           <div className="form-group">
             <label>Password</label>
             <input
@@ -56,10 +70,12 @@ const Login = () => {
               placeholder="Enter your password"
             />
           </div>
+
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
         <p className="auth-switch">
           Don't have an account? <Link to="/register">Sign Up</Link>
         </p>
@@ -69,4 +85,3 @@ const Login = () => {
 };
 
 export default Login;
-
