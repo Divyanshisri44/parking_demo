@@ -1,38 +1,47 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import './Auth.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import "./Auth.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    phone: ''
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
   });
+
   const [loading, setLoading] = useState(false);
-  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const result = await register(
-      formData.name,
-      formData.email,
-      formData.password,
-      formData.phone
-    );
-    setLoading(false);
-    if (result.success) {
-      navigate('/dashboard');
+
+    try {
+      const res = await axios.post(
+        "https://parking-demo-backend.onrender.com/api/auth/register",
+        formData
+      );
+
+      // token save (agar backend bhej raha ho)
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
+
+      alert("Account created successfully");
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,6 +49,7 @@ const Register = () => {
     <div className="auth-container">
       <div className="auth-card">
         <h2>Create Account</h2>
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Full Name</label>
@@ -52,6 +62,7 @@ const Register = () => {
               placeholder="Enter your full name"
             />
           </div>
+
           <div className="form-group">
             <label>Email</label>
             <input
@@ -63,6 +74,7 @@ const Register = () => {
               placeholder="Enter your email"
             />
           </div>
+
           <div className="form-group">
             <label>Phone</label>
             <input
@@ -74,6 +86,7 @@ const Register = () => {
               placeholder="Enter your phone number"
             />
           </div>
+
           <div className="form-group">
             <label>Password</label>
             <input
@@ -86,10 +99,12 @@ const Register = () => {
               placeholder="Enter your password (min 6 characters)"
             />
           </div>
+
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Creating account...' : 'Sign Up'}
+            {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
+
         <p className="auth-switch">
           Already have an account? <Link to="/login">Login</Link>
         </p>
@@ -99,4 +114,3 @@ const Register = () => {
 };
 
 export default Register;
-
