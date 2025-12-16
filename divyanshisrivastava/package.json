@@ -1,13 +1,15 @@
 {
   "name": "parking-app-mern",
   "version": "1.0.0",
-  "description": "Parking App with MERN Stack and Razorpay Integration",
+  "description": "Parking App with MERN Stack",
+  "private": true,
   "main": "server/index.js",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
     "start": "node server/index.js"
   },
-  "keywords": ["parking", "mern", "razorpay"],
-  "author": "",
   "license": "ISC"
 }
