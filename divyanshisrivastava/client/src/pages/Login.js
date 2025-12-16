@@ -26,16 +26,22 @@ const Login = () => {
     try {
       const res = await axios.post(
         "https://parking-demo-backend.onrender.com/api/auth/login",
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
 
-      // token save (optional but recommended)
+      // ✅ token save
       localStorage.setItem("token", res.data.token);
 
       alert("Login successful");
       navigate("/dashboard");
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+      console.error(err);
+      alert(err.response?.data?.message || "Server error");
     } finally {
       setLoading(false);
     }
@@ -71,7 +77,7 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary" disabled={loading}>
+          <button type="submit" disabled={loading} className="btn btn-primary">
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
